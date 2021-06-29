@@ -1,0 +1,5 @@
+{
+    "jwtSecret":"kalyaanpuri",
+    "mongoURL":"mongodb+srv://sonu123:g4WBWx6up7aYG6PV@tickets-system.pdjyj.mongodb.net/Tickets-system?retryWrites=true&w=majority"
+}
+
