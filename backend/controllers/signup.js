@@ -20,7 +20,7 @@ const createUser = async (req, res) => {
         if (user) {
             return res.status(400).json({ errors: [{ msg: "User already exists" }] })
         }
-        
+
         
         user = new User({
             name,
@@ -40,6 +40,7 @@ const createUser = async (req, res) => {
             }
         }
 
+
         jwt.sign(payload,
             config.get('jwtSecret'),
             { expiresIn: 36000 },
@@ -48,14 +49,14 @@ const createUser = async (req, res) => {
                     throw err
                 }
                 else {
-                    res.json({ token });
+                    res.status(200).json({ token });
                 }
 
             }
         )
     } catch (err) {
         console.log(err.message);
-        res.status(500).send('Server error');
+       res.status(500).send('Server error');
     }
 
 };
