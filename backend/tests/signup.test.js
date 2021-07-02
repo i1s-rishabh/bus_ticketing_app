@@ -32,24 +32,28 @@ describe("Test suite for user signup",()=>{
   
 
 
-    it('it should create a new user',async(done)=>{
-        let sampReqBody = {
+    it('it should create a new user',async()=>{
+        let req = {
             body:{
                 "name":"sonu",
                 "email":"sonu19@navgurukul.org",
-                "password":"1111111111"
+                "password":"111"
             }
         }
-        createUser(sampReqBody,res).then(() => {
-            console.log(res)
-            expect(res.statusCode).toBe(200)
-        })
-        
+        try{
+            console.log("hi")
+            const resTo = await createUser(req,res)
+            expect(resTo.statusCode).toBe(402)
+            console.log("message ",resTo)
+        }
+        catch(err){
+            console.log(err)
+        }
     })
 
-    //     it('It should validate if data is inserted',async()=>{
-    //    const userFromDb = await User.findOne({email:"sonu19@navgurukul.org"})
-    //    expect(userFromDb.name).toBe("sonu")
+    // it('It should validate if data is inserted',async()=>{
+    //     const userFromDb = await User.findOne({email:"sonu19@navgurukul.org"})
+    //     expect(userFromDb.name).toBe("sonu")
     // })
     
 })
