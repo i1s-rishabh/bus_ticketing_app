@@ -32,10 +32,9 @@ const createUser = async (req, res, next) => {
 
     const { name, email, password,isAdmin} = req.body;
 
-    try{
         let user = await User.findOne({ email })
         if (user) {
-            return res.status(400).json({ errors: [{ msg: "User already exists" }] })
+            return next({status:400, error: { msg: "User already exists" } })
         }
 
         user = new User({
@@ -71,9 +70,6 @@ const createUser = async (req, res, next) => {
 
             }
         )
-    }catch(err){
-        return res.status(500).send("server error")
-    }
 };
 module.exports = { createUser };
 
