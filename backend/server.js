@@ -15,16 +15,13 @@ app.use((req,res,next)=>{
 })
 
 app.use((err,req,res,next)=>{
-    console.log("from error handler",err)
-    if(err.message==="password invalid"){
-        return res.status(400).json({"msg":"invalid password"})
-    }
+    res.status(err.status).json(err.error)
 })
 
 // error handler should be the last middleware with app.use
 
-app.listen(4000,()=>{
-    console.log('Server is running')
-})
+// app.listen(4000,()=>{
+//     console.log('Server is running')
+// })
 
 module.exports = app;

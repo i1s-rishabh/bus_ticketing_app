@@ -17,6 +17,7 @@ const connectDB = async () => {
             useFindAndModify: false
         }
         await mongoose.connect(uri,mongooseOpts)
+        console.log("connected")
     }
 
     module.exports.closeDatabase = async () => {

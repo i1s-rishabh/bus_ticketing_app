@@ -3,27 +3,34 @@ const config = require('config')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 
-const { body, validationResult } = require('express-validator')
+const { check, validationResult } = require('express-validator')
 
-const validation = (req)=>{
 
+const validations = (req)=>{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors)
+        const err = {
+            error:'Please enter the password 8 or more characters',
+            status:400
+        }
+        return err
+    }
+    else{
+        return false
+    }
+    
 }
 
-
 const createUser = async (req, res, next) => {
-    console.log(req.body)
-    // const errors = validationResult(req);
-    const errors = req.body.password.length<1? true:false 
-    
-    if (errors) {
-        console.log(errors,"errors")
-        const err = new Error({error:"password invalid",
-    })
-        return next(err)
-        // return res.status(400).json({ error:'password' })
+
+    const errors = await validations(req)
+    console.log(errors)
+    if(errors){
+        return next(errors)
     }
 
-    const { name, email, password} = req.body;
+    const { name, email, password,isAdmin} = req.body;
 
     try{
         let user = await User.findOne({ email })
@@ -31,11 +38,11 @@ const createUser = async (req, res, next) => {
             return res.status(400).json({ errors: [{ msg: "User already exists" }] })
         }
 
-        
         user = new User({
             name,
             email,
             password,
+            isAdmin
         })
 
         const salt = await bcrypt.genSalt(10);
