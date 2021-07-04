@@ -2,11 +2,9 @@ const mongoose = require('mongoose');
 
 const staffSchema = new mongoose.Schema({
     adminId: { 
-        type:Schema.Types.ObjectId,
-        ref:User,
-        required: true
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'users',
     },
-
     name: {
           type: String,
           required: true
@@ -21,9 +19,9 @@ const staffSchema = new mongoose.Schema({
         },
     isDriver: {
 	    type: Boolean,
-            default:true,
-            required: true,
-			index : true
+        default:true,
+        required: true,
+        index : true
         }
 },{ 
     timestamps: true

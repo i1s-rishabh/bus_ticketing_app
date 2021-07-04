@@ -16,7 +16,7 @@ describe("Test suite for user signup",()=>{
 
     it("It should test the working of signup api",async()=>{
         const res = await request(app)
-        .post('/api/users')
+        .post('/api/users/signup')
         .send({
             name: "Kartik",
             email: "kartik19@navgurukul.org",
@@ -28,7 +28,7 @@ describe("Test suite for user signup",()=>{
 
     it("It should test the ",async()=>{
         const res = await request(app)
-        .post('/api/users')
+        .post('/api/users/signup')
         .send({
             name: "Kartik",
             email: "kartik19@navgurukul.org",

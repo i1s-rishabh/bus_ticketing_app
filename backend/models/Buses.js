@@ -5,22 +5,22 @@ const busSchema = new mongoose.Schema({
         type: String,
         required:true
     },
-		agency:{
-		type:Schema.Types.ObjectId,
-		ref:Agency
-		},
+    agency:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'users'
+    },
     vehicleNo: {
         type: String,
         unique: true,
         required: true
     },
     seats: [[{
-        type: string,
+        type: String,
     }]],
     busType: {
         type: String,
-				enum:['Ac', 'NonAc'],
-				default : 'Ac',
+        enum:['Ac', 'NonAc'],
+        default : 'Ac',
         required:true
     },
     seatCategory:{
@@ -29,42 +29,42 @@ const busSchema = new mongoose.Schema({
 				default : 'sleeper',
         required:true
     },
-    busStaff:[{
-        type:String ,
-        required: true
-			    }],
+    driver:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'staffs'
+        },
+    helper:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'staffs'
+        },
     policy: {
         type: String,
         required:true
     },
-    image:[{
+    images:[{
 			type: String
 	}],
     from:{ // index
 			type:mongoose.Schema.Types.ObjectId,
-			ref:Location,
+			ref:'Location',
 			index:true,
-			required:true
     },
     to:{
 			type:mongoose.Schema.Types.ObjectId,
-			ref:Location,
-			required:true,
+			ref:'Location',
 			index : true
 	   },
    arrivalTime: {
-        type: Date,
-        default: Date.now,
+        type: String,
         required: true
     },
     departureTime: {
-        type: Date,
-        default: Date.now,
-        required: true,
+        type: String,
+        required: true
     }
  
 },{ 
     timestamps: true
    })
-const bus = mongoose.model('Buses', busSchema)
-module.exports = bus
+const Bus = mongoose.model('Buses', busSchema)
+module.exports = Bus

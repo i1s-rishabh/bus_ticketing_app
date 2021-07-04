@@ -9,7 +9,6 @@ const { check, validationResult } = require('express-validator')
 const validations = (req)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(errors)
         const err = {
             error:'Please enter the password 8 or more characters',
             status:400
@@ -25,7 +24,6 @@ const validations = (req)=>{
 const createUser = async (req, res, next) => {
 
     const errors = await validations(req)
-    console.log(errors)
     if(errors){
         return next(errors)
     }
@@ -49,20 +47,21 @@ const createUser = async (req, res, next) => {
         user.password = await bcrypt.hash(password, salt)
 
         await user.save()
-
+        console.log(user.isAdmin)
         const payload = {
             user: {
                 id: user.id,
+                isAdmin:user.isAdmin
             }
         }
 
 
         jwt.sign(payload,
             config.get('jwtSecret'),
-            { expiresIn: 36000 },
+            { expiresIn: 40000 },
             (err, token) => {
                 if (err) {
-                    throw err
+                    return next(err)
                 }
                 else {
                   return res.status(200).json({ token });
@@ -70,6 +69,7 @@ const createUser = async (req, res, next) => {
 
             }
         )
+
 };
 module.exports = { createUser };
 
