@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const Location = require("../models/Locations");
+const {locationSearch} = require('../utils/searchLocation')
 
 const addLocation = async (req, res) => {
     const errors = validationResult(req);
@@ -8,15 +9,11 @@ const addLocation = async (req, res) => {
     }
     const { city, state } = req.body;
     try {
-        let locations = await Location.find({ city });
-        if(locations){
-            let searchedCity = locations.forEach((location)=>{
-                if(location.state === state){
-                    return res
-                        .status(400)
-                        .json({ errors: [{ msg: "Location Already Exists" }] });
-                }
-            })
+        let location = await locationSearch({city, state})
+        if(location){
+            return res
+                .status(400)
+                .json({ errors: [{ msg: "Location Already Exists" }] });
         }
         location = new Location({
             city,

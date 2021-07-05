@@ -1,4 +1,4 @@
-const { check, validationResult } = require('express-validator')
+const { validationResult } = require('express-validator')
 const Agency = require('../models/Agency')
 const Staffs = require('../models/Staffs')
 

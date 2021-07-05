@@ -7,7 +7,7 @@ const busSchema = new mongoose.Schema({
     },
     agency:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'users'
+        ref:'agencies'
     },
     vehicleNo: {
         type: String,
@@ -21,12 +21,11 @@ const busSchema = new mongoose.Schema({
         type: String,
         enum:['Ac', 'NonAc'],
         default : 'Ac',
-        required:true
     },
     seatCategory:{
         type: String,
         enum : ['sleeper', 'semi sleeper'],
-				default : 'sleeper',
+		default : 'sleeper',
         required:true
     },
     driver:{

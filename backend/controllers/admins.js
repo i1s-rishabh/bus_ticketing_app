@@ -1,5 +1,7 @@
 const Agency = require("../models/Agency");
-const { check, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
+
+
 
 const getAgency = async (req, res) => {
   try {
@@ -17,6 +19,9 @@ const getAgency = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+
+
 
 const createAgency = async (req, res) => {
   const errors = validationResult(req);

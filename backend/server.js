@@ -5,8 +5,12 @@ const app = express();
 app.use(express.json({ extended: false }));
 
 // body parser
-const userRoutes = require('./routes/users')
 connectDB()
+
+const busSearchRoutes = require('./routes/busSearch')
+app.use('/api/buses',busSearchRoutes);
+
+const userRoutes = require('./routes/users')
 app.use('/api/users',userRoutes);
 
 

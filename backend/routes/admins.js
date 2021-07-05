@@ -9,7 +9,6 @@ const {addLocation} = require('../controllers/addLocation');
 const Staff = require('../models/Staffs')
 const { check, validationResult } = require('express-validator')
 
-
 // Get @route api/admins/agency
 // Get the current admin agency profile
 // private route
@@ -21,7 +20,8 @@ router.get('/admin/profile', auth,isAdmin,getAgency );
 // private route
 router.post('/admin/addAgency', [auth,isAdmin, [
     check('phone', 'Phone number is required')
-    .isLength({ min: 10 }),
+    .isInt()
+    .isLength({ min: 10, max:10 }),
     check('agencyName', 'Agency name is required')
         .not()
         .isEmpty(),
