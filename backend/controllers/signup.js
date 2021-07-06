@@ -3,7 +3,7 @@ const config = require('config')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 
-const { validationResult } = require('express-validator')
+const { validationResult } = require('express-validator');
 
 
 const validations = (req)=>{
@@ -23,14 +23,14 @@ const validations = (req)=>{
 
 const createUser = async (req, res, next) => {
 
-    const errors = await validations(req)
-    if(errors){
-        return next(errors)
-    }
+    // const errors = await validations(req)
+    // if(errors){
+    //     return next(errors)
+    // }
 
     const { name, email, password,isAdmin} = req.body;
-
         let user = await User.findOne({ email })
+        console.log(user)
         if (user) {
             return next({status:400, error: { msg: "User already exists" } })
         }
@@ -42,12 +42,14 @@ const createUser = async (req, res, next) => {
             isAdmin
         })
 
+
+
         const salt = await bcrypt.genSalt(10);
 
         user.password = await bcrypt.hash(password, salt)
 
         await user.save()
-        console.log(user.isAdmin)
+
         const payload = {
             user: {
                 id: user.id,
@@ -55,8 +57,7 @@ const createUser = async (req, res, next) => {
             }
         }
 
-
-        jwt.sign(payload,
+            jwt.sign(payload,
             config.get('jwtSecret'),
             { expiresIn: 40000 },
             (err, token) => {
@@ -64,11 +65,12 @@ const createUser = async (req, res, next) => {
                     return next(err)
                 }
                 else {
-                  return res.status(200).json({ token });
+                  return res.status(200).json( {token});
                 }
-
             }
         )
+
+        // return res.status(200)
 
 };
 module.exports = { createUser };
