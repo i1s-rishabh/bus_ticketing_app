@@ -21,16 +21,19 @@ const validations = (req)=>{
     
 }
 
+const getSignedJwtToken = function (payload,secret = config.get("jwtSecret"), expiresIn = 40000) {
+    return jwt.sign(payload, secret, {expiresIn});
+}  
+
 const createUser = async (req, res, next) => {
 
-    // const errors = await validations(req)
-    // if(errors){
-    //     return next(errors)
-    // }
+    const errors = await validations(req)
+    if(errors){
+        return next(errors)
+    }
 
     const { name, email, password,isAdmin} = req.body;
         let user = await User.findOne({ email })
-        console.log(user)
         if (user) {
             return next({status:400, error: { msg: "User already exists" } })
         }
@@ -57,21 +60,10 @@ const createUser = async (req, res, next) => {
             }
         }
 
-            jwt.sign(payload,
-            config.get('jwtSecret'),
-            { expiresIn: 40000 },
-            (err, token) => {
-                if (err) {
-                    return next(err)
-                }
-                else {
-                  return res.status(200).json( {token});
-                }
-            }
-        )
+        const token = getSignedJwtToken(payload)
+        
 
-        // return res.status(200)
-
+        res.status(200).json( {token});
 };
 module.exports = { createUser };
 

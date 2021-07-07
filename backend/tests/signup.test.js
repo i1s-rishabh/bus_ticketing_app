@@ -3,13 +3,14 @@ const app = require('../server')
 const { createUser } = require('../controllers/signup')
 const request = require('supertest');
 const User = require('../models/Users');
-const sinon = require('sinon');
+const {loginTests} = require('./login')
+const { addLocationTests } = require('./addlocation')
+
 
 
 beforeAll(async () => await db.connect())
 afterAll(async () => await db.clearDatabase())
 afterAll(async () => await db.closeDatabase())
-
 
 
 const mockResponse = () => {
@@ -19,34 +20,24 @@ const mockResponse = () => {
     return res
 
 }
+
+
   
 
 
 describe("Test suite for user signup",()=>{
 
-    // it("It should test the working of signup api",async()=>{
-    //     const res = await request(app)
-    //     .post('/api/users/signup')
-    //     .send({
-    //         name: "Kartik",
-    //         email: "kartik19@navgurukul.org",
-    //         password: "1212121212"
-    //     });
-    //         expect(res.statusCode).toBe(200);
+    it("It should test the working of signup api",async()=>{
+        const res = await request(app)
+        .post('/api/users/signup')
+        .send({
+            name: "Kartik",
+            email: "kartik19@navgurukul.org",
+            password: "1212121212"
+        });
+            expect(res.statusCode).toBe(200);
 
-    // })
-
-    // it("It should give 400 in response as user already exists",async()=>{
-    //     const res = await request(app)
-    //     .post('/api/users/signup')
-    //     .send({
-    //         name: "Kartik",
-    //         email: "kartik19@navgurukul.org",
-    //         password: "12"
-    //     });
-    //         expect(res.statusCode).toBe(400);
-
-    // })
+    })
 
 
     it('it should create a new user',async()=>{
@@ -58,15 +49,31 @@ describe("Test suite for user signup",()=>{
                 isAdmin:true
             }
         }
-
         const res = mockResponse()
+    
         await createUser(req,res)
         expect(res.status).toHaveBeenCalledWith(200)
+        expect(res.json).toHaveBeenCalled()
     })
 
-    // it('It should validate if data is inserted',async()=>{
-    //     const userFromDb = await User.findOne({email:"sonu19@navgurukul.org"})
-    //     expect(userFromDb.name).toBe("sonu")
-    // })
-    
+    it("It should give 400 in response as user already exists",async()=>{
+        let req = {
+            body:{
+                name:"sonu",
+                email:"sonu19@navgurukul.org",
+                password:"111111111",
+                isAdmin:true
+            }
+        }
+
+        const next = jest.fn()
+        const res = mockResponse()
+
+        await createUser(req,res,next)
+        expect(next.mock.calls[0][0]).toEqual({status:400, error: { msg: "User already exists" } })
+    })
+
+    loginTests()
+
+    // addLocationTests()
 })

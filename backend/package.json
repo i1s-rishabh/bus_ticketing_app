@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon server",
     "server": "nodemon",
-    "test": "jest --testEnvironment=node --runInBand ./tests",
+    "test": "jest --testEnvironment=node --runInBand --watchAll --coverage ./tests",
     "lint": "eslint"
   },
   "author": "sonu shakya",
