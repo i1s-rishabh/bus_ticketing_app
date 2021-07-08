@@ -5,7 +5,7 @@ const request = require('supertest');
 const User = require('../models/Users');
 const {loginTests} = require('./login')
 const { addLocationTests } = require('./addlocation')
-
+const { adminjsTests } = require('./adminTests')
 
 
 beforeAll(async () => await db.connect())
@@ -75,5 +75,7 @@ describe("Test suite for user signup",()=>{
 
     loginTests()
 
-    // addLocationTests()
+    addLocationTests()
+
+    adminjsTests()
 })

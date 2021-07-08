@@ -13,7 +13,7 @@ const addLocation = async (req, res) => {
         if(location){
             return res
                 .status(400)
-                .json({ errors: [{ msg: "Location Already Exists" }] });
+                .json({ errors: "Location Already Exists" });
         }
         location = new Location({
             city,

@@ -36,10 +36,10 @@ describe("Test suite for auth midleware",()=>{
     })
 
 
-    it('when token invalid, shoud call with status 200',async()=>{
+    it('when token is valid, shoud call with status 200',async()=>{
         const next = jest.fn()
         let req = {}
-        req.header = (input)=>{if(input==='x-auth-token') return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjBlNTNlYTVlNGQyMDEwMjFjYWY5OGQ1IiwiaXNBZG1pbiI6ZmFsc2V9LCJpYXQiOjE2MjU2NDkxMjUsImV4cCI6MTYyNTY4OTEyNX0.MTZBxlyWGowbYY8UNnX3XxrUHKHZF7gCMeA1SZZ0kiw"}
+        req.header = (input)=>{if(input==='x-auth-token') return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjBlNjlkMjEwYWM3YjUzZDQwYWRjODJlIiwiaXNBZG1pbiI6dHJ1ZX0sImlhdCI6MTYyNTcyNjgzOSwiZXhwIjoxNjY1NzI2ODM5fQ.9YRTzK_bv4HDUogT4AuCl0AagBqOhXmqNQL7uvPLKbw"}
         req.user = (input)=>{ return req }
 
         const res = mockResponse()

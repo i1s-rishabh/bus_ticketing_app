@@ -26,7 +26,6 @@ const getSignedJwtToken = function (payload,secret = config.get("jwtSecret"), ex
 }  
 
 const createUser = async (req, res, next) => {
-
     const errors = await validations(req)
     if(errors){
         return next(errors)

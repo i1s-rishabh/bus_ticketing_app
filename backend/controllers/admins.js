@@ -9,7 +9,6 @@ const getAgency = async (req, res) => {
       "agent",
       ["name", "email"]
     );
-    console.log(agency);
     if (!agency) {
       return res.status(400).json({ msg: "There is no profile for this user" });
     }
@@ -44,18 +43,17 @@ const createAgency = async (req, res) => {
         { $set: agencyFields },
         { new: true }
       );
-      return res.json(agencyProfile);
+      return res.status(200).json(agencyProfile);
     }
 
     // Need to create
-
+    
     agencyProfile = new Agency(agencyFields);
-    console.log("hello");
-    agencyProfile.save();
-    res.json(agencyProfile);
+    await agencyProfile.save();
+    res.status(200).json(agencyProfile);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).json({msg:"Server Error"});
   }
 };
 

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">27.78% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/18</span>
+                <span class='fraction'>15/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">27.78% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/18</span>
+                <span class='fraction'>15/18</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -91,24 +91,24 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -119,25 +119,25 @@
 const Location = require("../models/Locations");
 const {locationSearch} = require('../utils/searchLocation')
 &nbsp;
-const addLocation = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-    const errors = <span class="cstat-no" title="statement not covered" >validationResult(req);</span>
-<span class="cstat-no" title="statement not covered" >    if (!errors.isEmpty()) {</span>
+const addLocation = async (req, res) =&gt; {
+    const errors = validationResult(req);
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!errors.isEmpty()) {
 <span class="cstat-no" title="statement not covered" >        return res.status(400).json({ errors: errors.array() });</span>
     }
-    const { city, state } = <span class="cstat-no" title="statement not covered" >req.body;</span>
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        let location = <span class="cstat-no" title="statement not covered" >await locationSearch({city, state})</span>
-<span class="cstat-no" title="statement not covered" >        if(location){</span>
-<span class="cstat-no" title="statement not covered" >            return res</span>
+    const { city, state } = req.body;
+    try {
+        let location = await locationSearch({city, state})
+        if(location){
+            return res
                 .status(400)
-                .json({ errors: [{ msg: "Location Already Exists" }] });
+                .json({ errors: "Location Already Exists" });
         }
-<span class="cstat-no" title="statement not covered" >        location = new Location({</span>
+        location = new Location({
             city,
             state,
         });
-<span class="cstat-no" title="statement not covered" >        await location.save();</span>
-<span class="cstat-no" title="statement not covered" >        res.status(200).json({msg:"Location Added Succesfully!!"})</span>
+        await location.save();
+        res.status(200).json({msg:"Location Added Succesfully!!"})
     } catch (err) {
 <span class="cstat-no" title="statement not covered" >        console.error(err);</span>
 <span class="cstat-no" title="statement not covered" >        res.status(500).send("server error");</span>
@@ -151,7 +151,7 @@ module.exports = {addLocation};</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Jul 07 2021 18:24:16 GMT+0530 (India Standard Time)
+                at Thu Jul 08 2021 18:01:08 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
