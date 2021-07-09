@@ -14,8 +14,7 @@ const getAgency = async (req, res) => {
     }
     res.status(200).json(agency);
   } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Server error");
+    res.status(500).json({msg:"Server error"});
   }
 };
 
@@ -52,7 +51,6 @@ const createAgency = async (req, res) => {
     await agencyProfile.save();
     res.status(200).json(agencyProfile);
   } catch (err) {
-    console.error(err.message);
     res.status(500).json({msg:"Server Error"});
   }
 };

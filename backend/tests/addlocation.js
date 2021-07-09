@@ -27,8 +27,8 @@ const addLocationTests = () => describe("Test suite addlocation.js file",()=>{
     it("It should add the loction with status 200",async()=>{
         let req = {
             body:{
-                city:"Pink City",
-                state:"Rajasthan"
+                city:"Dharamshala",
+                state:"Himachal Pradesh"
             }
         }
         const res = mockResponse()
@@ -42,8 +42,8 @@ const addLocationTests = () => describe("Test suite addlocation.js file",()=>{
     it("It should not add the loction as it is already exists, with status 400",async()=>{
         let req = {
             body:{
-                city:"Pink City",
-                state:"Rajasthan"
+                city:"Dharamshala",
+                state:"Himachal Pradesh"
             }
         }
         const res = mockResponse()

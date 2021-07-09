@@ -55,6 +55,22 @@ const adminjsTests = () => describe("Test suite admin.js file",()=>{
             expect(res.json).toHaveBeenCalled();
         });
 
+
+        it("It should return server error with status 500",async()=>{
+            const res = mockResponse()
+            const req={body:{
+                "phone":9999999999,
+                "agencyName":"",
+                "headOfficeLocation":""
+                },
+            user:{id:''}}
+
+            await createAgency(req,res)
+
+            expect(res.status).toHaveBeenCalledWith(500);
+            expect(res.json).toHaveBeenCalled();
+        });
+
         it("It should be called with status 400 as there is no body passed in reqest",async()=>{
             const res = mockResponse()
             const req={"express-validator#contexts": [{message:"Name is required"}]}
@@ -94,6 +110,17 @@ const adminjsTests = () => describe("Test suite admin.js file",()=>{
             await getAgency(req,res)
 
             expect(res.status).toHaveBeenCalledWith(400);
+            expect(res.json).toHaveBeenCalled();
+        });
+
+        it("It should return server error with status 500",async()=>{
+            const res = mockResponse()
+            const req={
+            user:{id:''}}
+
+            await getAgency(req,res)
+
+            expect(res.status).toHaveBeenCalledWith(500);
             expect(res.json).toHaveBeenCalled();
         });
 

@@ -53,6 +53,14 @@ const busSchema = new mongoose.Schema({
 			ref:'Location',
 			index : true
 	   },
+    fare:{
+        type:Number,
+        required:true
+    },
+    schedule: [{
+        type: Number,
+        required: true
+    }],
    arrivalTime: {
         type: String,
         required: true

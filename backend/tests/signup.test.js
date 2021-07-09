@@ -6,7 +6,8 @@ const User = require('../models/Users');
 const {loginTests} = require('./login')
 const { addLocationTests } = require('./addlocation')
 const { adminjsTests } = require('./adminTests')
-
+const { addStaffTests } = require('./addStaff')
+const { bussesTests } = require('./busses')
 
 beforeAll(async () => await db.connect())
 afterAll(async () => await db.clearDatabase())
@@ -23,7 +24,7 @@ const mockResponse = () => {
 
 
   
-
+jest.setTimeout(7000)
 
 describe("Test suite for user signup",()=>{
 
@@ -78,4 +79,8 @@ describe("Test suite for user signup",()=>{
     addLocationTests()
 
     adminjsTests()
+
+    addStaffTests()
+
+    bussesTests()
 })
