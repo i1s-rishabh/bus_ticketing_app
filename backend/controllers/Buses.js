@@ -14,6 +14,7 @@ const addBus = async (req, res) => {
 
   const {
     busName,
+    id,
     vehicleNo,
     seats,
     busType,
@@ -44,6 +45,8 @@ const addBus = async (req, res) => {
   if (seatCategory) busDetails.seatCategory = seatCategory;
   if (busType) busDetails.busType = busType;
 
+  
+  
   try {
     let agencyProfile = await Agency.findOne({ agent: req.user.id });
     if (agencyProfile) {
@@ -57,19 +60,17 @@ const addBus = async (req, res) => {
       if (!toLocation || !fromLocation) {
         return res.status(404).json({ msg: "No such location found" });
       }
-
       driver = await searchStaff(driver);
       helper = await searchStaff(helper);
       if (!driver || !helper) {
-        return res.status(404).json({ msg: "No such staff found" });
+        return res.status(400).json({ msg: "No such staff found" });
       } 
       else if (!driver.isDriver) {
-        return res.status(404).json({ msg: "No such driver found" });
+        return res.status(400).json({ msg: "No such driver found" });
       }
       else if (helper.isDriver) {
-        return res.status(404).json({ msg: "No such helper found" });
+        return res.status(400).json({ msg: "No such helper found" });
       }
-      console.log()
       busDetails.driver = driver;
       busDetails.helper = helper;
       busDetails.from = fromLocation._id;
@@ -85,15 +86,19 @@ const addBus = async (req, res) => {
         return res.status(200).json(bus);
       }
 
+      // testing purpose only
+      if(id) busDetails._id=id
+
+
       bus = new Bus(busDetails);
+
       console.log("done successfully");
       await bus.save();
       res.status(200).json(bus);
     } else {
-      return res.status(404).json({ msg: "No agency found of current admin" });
+      return res.status(400).json({ msg: "No agency found of current admin" });
     }
   } catch (err) {
-    console.log(err)
     return res.status(500).json({ msg: "Server error" });
   }
 };
@@ -164,12 +169,9 @@ const getBus = async (req, res) => {
     if (!bus) {
       return res.status(400).json({ msg: "there is no such bus" });
     }
-    return res.json(bus);
+    return res.status(200).json(bus);
   } catch (err) {
-    if (err.kind == "ObjectId") {
-      return res.status(400).json({ msg: "there is no such bus" });
-    }
-    res.status(500).send("server Error");
+    res.status(500).json({msg:"server Error"});
   }
 };
 
@@ -177,7 +179,6 @@ const getBus = async (req, res) => {
 const getBusStatus = async (req, res) => {
   try {
     const bus = await Bus.findById(req.params.busId);
-
     if (!bus) {
       return res.status(400).json({ msg: "there is no such bus" });
     }
@@ -195,12 +196,9 @@ const getBusStatus = async (req, res) => {
         }
       }
     }
-    res.status(200).json(statusObj);
+    return res.status(200).json(statusObj);
   } catch (err) {
-    if (err.kind == "ObjectId") {
-      return res.status(400).json({ msg: "there is no such bus" });
-    }
-    res.status(500).send("server Error");
+    res.status(500).json("server Error");
   }
 };
 module.exports = { addBus, searchBuses, getBus, getBusStatus };

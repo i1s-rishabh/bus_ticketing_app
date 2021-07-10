@@ -10,7 +10,7 @@ const validations = (req)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         const err = {
-            error:'Please enter the password 8 or more characters',
+            error:errors,
             status:400
         }
         return err

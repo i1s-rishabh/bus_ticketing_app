@@ -27,9 +27,9 @@ router.get("/:busId",auth,
 );
 
 //private route
-// get  api/buses/:busId
-// @ desc search buses by busId
-router.get("/:busId/status",getBusStatus)
+// get  api/buses/:busId/status
+// @ desc get bus status by busId
+router.get("/:busId/status",auth,getBusStatus)
 
 
 //private route
