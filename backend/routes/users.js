@@ -4,6 +4,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator')
 const { createUser } = require('../controllers/signup');
 const { login } = require('../controllers/login')
+const { cancelTickets } = require('../controllers/tickets')
 const auth = require('../middlewares/auth')
 
 // api/users/signup  POST route
@@ -25,6 +26,10 @@ router.post("/login",[
 
 
 
+
+router.delete("/user/:ticketId",auth,
+cancelTickets
+);
 
 
 

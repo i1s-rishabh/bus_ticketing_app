@@ -4,6 +4,8 @@ const Agency = require("../models/Agency");
 const { locationSearch } = require("../utils/searchLocation");
 const { allBookedTickets } = require("../utils/allBookedTickets");
 const Staffs = require("../models/Staffs");
+const Tickets = require("../models/Tickets");
+
 
 // create a new bus or update the bus
 const addBus = async (req, res) => {
@@ -45,8 +47,6 @@ const addBus = async (req, res) => {
   if (seatCategory) busDetails.seatCategory = seatCategory;
   if (busType) busDetails.busType = busType;
 
-  
-  
   try {
     let agencyProfile = await Agency.findOne({ agent: req.user.id });
     if (agencyProfile) {
@@ -64,11 +64,9 @@ const addBus = async (req, res) => {
       helper = await searchStaff(helper);
       if (!driver || !helper) {
         return res.status(400).json({ msg: "No such staff found" });
-      } 
-      else if (!driver.isDriver) {
+      } else if (!driver.isDriver) {
         return res.status(400).json({ msg: "No such driver found" });
-      }
-      else if (helper.isDriver) {
+      } else if (helper.isDriver) {
         return res.status(400).json({ msg: "No such helper found" });
       }
       busDetails.driver = driver;
@@ -87,8 +85,7 @@ const addBus = async (req, res) => {
       }
 
       // testing purpose only
-      if(id) busDetails._id=id
-
+      if (id) busDetails._id = id;
 
       bus = new Bus(busDetails);
 
@@ -148,16 +145,18 @@ const searchBuses = async (req, res) => {
     if (!buses) {
       return res.status(400).json([]);
     }
-    buses = buses.filter((bus)=>{if(bus.schedule.includes(date)){
-    return bus
-    }});
-    if(buses.isEmpty){
-      return res.status(400).json([])
+    buses = buses.filter((bus) => {
+      if (bus.schedule.includes(date)) {
+        return bus;
+      }
+    });
+    if (buses.isEmpty) {
+      return res.status(400).json([]);
     }
     return res.status(200).json(buses);
   } catch (err) {
     console.error(err);
-    res.status(500).json({msg:"server error"});
+    res.status(500).json({ msg: "server error" });
   }
 };
 
@@ -171,9 +170,29 @@ const getBus = async (req, res) => {
     }
     return res.status(200).json(bus);
   } catch (err) {
-    res.status(500).json({msg:"server Error"});
+    res.status(500).json({ msg: "server Error" });
   }
 };
+
+
+// delete bus by busId
+const deleteBus = async(req,res) => {
+  try{
+    const bus = await Bus.findById(req.params.busId)
+    const agency = await Agency.findOne({agent:req.user.id})
+    if(!bus || !agency){
+      return res.status(400).json({msg:"bus not found"})
+    }
+
+    if(bus.agency.toString() !== agency._id.toString()){
+      await findOneAndDelete({_id:req.params.id})
+      return res.status(200).json({msg:"Bus deleted successfully"})
+    }
+  }catch(err){
+    return res.status(500).json({msg:"server error"})
+  }
+}
+
 
 // get bus status
 const getBusStatus = async (req, res) => {
@@ -201,4 +220,20 @@ const getBusStatus = async (req, res) => {
     res.status(500).json("server Error");
   }
 };
-module.exports = { addBus, searchBuses, getBus, getBusStatus };
+
+const resetBus = async (req, res) => {
+  try {
+    const bus = await Bus.findById(req.params.busId);
+    if (!bus) {
+      return res.status(400).json({ msg: "there is no such bus" });
+    }
+    await Tickets.deleteMany({ busId: req.params.busId })
+
+    res.status(200).json({msg:"bus reset is done successfully"})
+
+  } catch (err) {
+    res.status(500).json({msg:"server error"})
+  }
+};
+
+module.exports = { addBus, searchBuses, getBus, getBusStatus, resetBus, deleteBus };

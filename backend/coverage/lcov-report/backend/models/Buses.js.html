@@ -134,7 +134,18 @@
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
 <a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -209,85 +220,107 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const mongoose=require('mongoose')
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const mongoose = require("mongoose");
 &nbsp;
-const busSchema = new mongoose.Schema({
+const busSchema = new mongoose.Schema(
+  {
     busName: {
-        type: String,
-        required:true
+      type: String,
+      required: true,
     },
-    agency:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'agencies'
+    agency: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "agencies",
     },
     vehicleNo: {
-        type: String,
-        unique: true,
-        required: true
+      type: String,
+      unique: true,
+      required: true,
     },
-    seats: [[{
-        type: String,
-    }]],
+    seats: [
+      [
+        {
+          type: String,
+        },
+      ],
+    ],
     busType: {
-        type: String,
-        enum:['Ac', 'NonAc'],
-        default : 'Ac',
+      type: String,
+      enum: ["Ac", "NonAc"],
+      default: "Ac",
     },
-    seatCategory:{
-        type: String,
-        enum : ['sleeper', 'semi sleeper'],
-		default : 'sleeper',
-        required:true
+    seatCategory: {
+      type: String,
+      enum: ["sleeper", "semi sleeper"],
+      default: "sleeper",
+      required: true,
     },
-    driver:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'staffs'
-        },
-    helper:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'staffs'
-        },
+    driver: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "staffs",
+    },
+    helper: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "staffs",
+    },
     policy: {
+      type: String,
+      required: true,
+    },
+    images: [
+      {
         type: String,
-        required:true
+      },
+    ],
+    from: {
+      // index
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Location",
+      index: true,
     },
-    images:[{
-			type: String
-	}],
-    from:{ // index
-			type:mongoose.Schema.Types.ObjectId,
-			ref:'Location',
-			index:true,
+    to: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Location",
+      index: true,
     },
-    to:{
-			type:mongoose.Schema.Types.ObjectId,
-			ref:'Location',
-			index : true
-	   },
-    fare:{
-        type:Number,
-        required:true
+    fare: {
+      type: Number,
+      required: true,
     },
-    schedule: [{
+    schedule: [
+      {
         type: Number,
-        required: true
-    }],
-   arrivalTime: {
-        type: String,
-        required: true
+        required: true,
+      },
+    ],
+    arrivalTime: {
+      type: String,
+      required: true,
     },
     departureTime: {
-        type: String,
-        required: true
-    }
- 
-},{ 
-    timestamps: true
-   })
-const Bus = mongoose.model('Buses', busSchema)
-module.exports = Bus
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+const Bus = mongoose.model("Buses", busSchema);
+module.exports = Bus;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -295,7 +328,7 @@ module.exports = Bus
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Jul 11 2021 00:51:45 GMT+0530 (India Standard Time)
+                at Mon Jul 12 2021 15:40:09 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

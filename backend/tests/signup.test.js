@@ -5,7 +5,7 @@ const request = require('supertest');
 const User = require('../models/Users');
 const {loginTests} = require('./login')
 const { addLocationTests } = require('./addlocation')
-const { adminjsTests } = require('./adminTests')
+const { adminjsTests, deleteAgencyTests } = require('./adminTests')
 const { addStaffTests } = require('./addStaff')
 const { bussesTests } = require('./busses')
 const { getBusStatusTests } = require('./getBusStatus')
@@ -102,4 +102,6 @@ describe("Test suite for user signup",()=>{
     getBusStatusTests()
 
     ticketsTests()
+    
+    deleteAgencyTests()
 })

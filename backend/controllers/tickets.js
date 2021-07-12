@@ -2,6 +2,16 @@ const Bus = require("../models/Buses");
 const Tickets = require("../models/Tickets");
 const { validationResult } = require("express-validator");
 const { allBookedTickets } = require("../utils/allBookedTickets");
+const nodemailer = require("nodemailer");
+
+var transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "sonu19@navgurukul.org",
+    pass: '777777777'
+  }
+});
+
 
 const bookTickets = async (req, res) => {
   const errors = validationResult(req);
@@ -10,7 +20,6 @@ const bookTickets = async (req, res) => {
   }
 
   const { seats_no, passengers, journeyDate, email, contactNo } = req.body;
-
   const createTicket = {
     seats_no,
     passengers,
@@ -42,16 +51,32 @@ const bookTickets = async (req, res) => {
 
     createTicket.userId = req.user.id;
     createTicket.busId = bus._id;
-    console.log(createTicket);
     const generateTicket = new Tickets(createTicket);
-
     await generateTicket.save();
 
-    return res.status(200).json(generateTicket);
+    var mailOptions = {
+      from: 'sonu19@navgurukul.org',
+      to: 'deepak19@navgurukul.org',
+      subject: "Testing of nodemailer",
+      text: "Deepak Deepak"
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        res.status(400).json({msg:"error"})
+      } else {
+        console.log('Email sent successfully: ');
+        return res.status(200).json(generateTicket);
+      }
+    });
+    
   } catch (err) {
     return res.status(500).json({ msg: "server error" });
   }
 };
+
+
+
 
 const isOutOfRange = (selected_seats, seats) => {
   var flag = true;
@@ -68,4 +93,17 @@ const isOutOfRange = (selected_seats, seats) => {
   return flag;
 };
 
-module.exports = { bookTickets };
+const cancelTickets = async (req, res) => {
+  try{
+    const ticket =await Tickets.findOne({_id:req.params.ticketId,userId:req.user.id})
+    if(!ticket){
+    return res.status(400).json({msg:"ticket not found"})
+    }
+    await Tickets.findOneAndDelete({_id:req.params.ticketId})
+    return res.status(200).json({msg:"ticket cancelled successfuly"})
+  }catch(err){
+    return res.status(500).json({msg:"server error"})
+  }
+}
+
+module.exports = { bookTickets, cancelTickets };

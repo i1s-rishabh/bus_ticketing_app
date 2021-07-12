@@ -1,4 +1,6 @@
 const Agency = require("../models/Agency");
+const Staffs = require('../models/Staffs');
+const Buses = require('../models/Buses')
 const { validationResult } = require("express-validator");
 
 
@@ -56,4 +58,21 @@ const createAgency = async (req, res) => {
 };
 
 
-module.exports = { getAgency, createAgency };
+const deleteAgency = async(req,res) =>{
+  try {
+      const agency = await Agency.findOneAndDelete({ agent: req.user.id})
+      if(!agency){
+         return res.status(400).json({msg:"No such Agency found"})
+      }
+      await Buses.deleteMany({agency:agency.adminId})
+      await Staffs.deleteMany({ adminId:agency.adminId });
+      return res.status(200).json({msg:"agency deleted succesfully"})
+      }
+      catch (err) {
+        console.error(err)
+      res.status(500).json({msg:"Server error"});
+    }
+  };
+
+
+module.exports = { getAgency, createAgency, deleteAgency };

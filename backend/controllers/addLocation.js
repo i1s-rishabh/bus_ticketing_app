@@ -27,4 +27,5 @@ const addLocation = async (req, res) => {
     }
 };
 
+
 module.exports = {addLocation};

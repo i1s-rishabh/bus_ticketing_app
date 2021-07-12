@@ -15,7 +15,7 @@ app.use('/api/users',userRoutes);
 
 
 const adminRoutes = require('./routes/admins')
-app.use('/api/admins',adminRoutes)
+app.use('/api/admins/admin',adminRoutes)
 
 app.use((req,res,next)=>{
     console.log("next called without anything")
@@ -30,8 +30,8 @@ app.use((err,req,res,next)=>{
 
 const PORT = 4000;
 
-// app.listen(PORT,()=>{
-//     console.log(`Server is running at port ${PORT}`)
-// })
+app.listen(PORT,()=>{
+    console.log(`Server is running at port ${PORT}`)
+})
 
 module.exports = app;

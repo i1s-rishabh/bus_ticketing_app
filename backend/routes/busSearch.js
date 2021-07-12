@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth')
-const { searchBuses,getBus, getBusStatus } = require('../controllers/Buses')
+const { searchBuses,getBus, getBusStatus,deleteBus } = require('../controllers/Buses')
 const { bookTickets } = require('../controllers/tickets')
-const { check } = require('express-validator')
+const { check } = require('express-validator');
+const isAdmin = require('../middlewares/isAdmin');
 
 
 //private route
@@ -25,6 +26,15 @@ router.post("/",[auth,
 router.get("/:busId",auth,
     getBus
 );
+
+
+//private route
+// delete  api/buses/:busId
+router.delete("/:busId",auth,isAdmin,
+deleteBus
+);
+
+
 
 //private route
 // get  api/buses/:busId/status
