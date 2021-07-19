@@ -141,7 +141,13 @@ const searchBuses = async (req, res) => {
 
     let buses = await Bus.find({
       $and: [{ to: destination }, { from: source }],
-    });
+    }).populate('to',['city','state'])
+    .populate('from',['city','state'])
+    .populate('driver',['name'])
+    .populate('helper','name')
+    .populate('agency',['agencyName','phone']);
+    
+
     if (!buses) {
       return res.status(400).json([]);
     }

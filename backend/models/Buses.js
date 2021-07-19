@@ -53,12 +53,12 @@ const busSchema = new mongoose.Schema(
     from: {
       // index
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      ref: "location",
       index: true,
     },
     to: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      ref: "location",
       index: true,
     },
     fare: {
@@ -84,5 +84,5 @@ const busSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const Bus = mongoose.model("Buses", busSchema);
+const Bus = mongoose.model("buses", busSchema);
 module.exports = Bus;

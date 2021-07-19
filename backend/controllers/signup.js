@@ -10,7 +10,7 @@ const validations = (req)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         const err = {
-            error:errors,
+            errors: errors.array(),
             status:400
         }
         return err
@@ -24,7 +24,6 @@ const validations = (req)=>{
 const getSignedJwtToken = function (payload,secret = config.get("jwtSecret"), expiresIn = 40000) {
     return jwt.sign(payload, secret, {expiresIn});
 }  
-
 const createUser = async (req, res, next) => {
     const errors = await validations(req)
     if(errors){

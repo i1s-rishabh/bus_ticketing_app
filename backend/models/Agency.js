@@ -22,5 +22,5 @@ const agencySchema= new mongoose.Schema({
 },{ 
     timestamps: true
    })
-const Agency=mongoose.model('Agencies',agencySchema)
+const Agency=mongoose.model('agencies',agencySchema)
 module.exports=Agency

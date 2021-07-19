@@ -1,6 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
+const User = require('../models/Users')
 const { check, validationResult } = require('express-validator')
 const { createUser } = require('../controllers/signup');
 const { login } = require('../controllers/login')
@@ -24,6 +25,17 @@ router.post("/login",[
         check("password", "password is required").exists(),
 ],login)
 
+ 
+// @route api/users/login
+router.get('/auth', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password')
+        res.send(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('server error')
+    }
+});
 
 
 

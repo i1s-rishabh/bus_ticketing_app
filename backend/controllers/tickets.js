@@ -8,7 +8,7 @@ var transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "sonu19@navgurukul.org",
-    pass: '777777777'
+    pass: '11111111'
   }
 });
 
@@ -56,9 +56,61 @@ const bookTickets = async (req, res) => {
 
     var mailOptions = {
       from: 'sonu19@navgurukul.org',
-      to: 'deepak19@navgurukul.org',
-      subject: "Testing of nodemailer",
-      text: "Deepak Deepak"
+      to: 'rohit19@navgurukul.org',
+      subject: "Tickets Status",
+      html: `<p>Hello Deepak</p>
+      <p> Your Ticket Detail </p>
+      <div> 
+        <Card className="container p-5">
+        <Table bordered size="sm">
+          <tbody>
+            <tr>
+              <td colSpan="2">
+                <b> From </b>New Delhi, Delhi
+              </td>
+            </tr>
+             <tr>
+              <td colSpan="2">
+               <b> to </b> Dharamshala, Himachal pradesh
+              </td>
+            </tr>
+            <tr>
+              <td><b> Date of journey</b> </td>
+              <td>5/8/2021</td>
+            </tr>
+            <tr>
+              <td><b>Bus Name and Type</b></td>
+              <td>Pucchi Travels semi sleeper AC bus</td>
+            </tr>
+            <tr>
+              <td><b>Passenger Name</b></td>
+              <td>Kartik</td>
+            </tr>
+            <tr>
+              <td><b>Phone Number</b></td>
+              <td>1236547891</td>
+            </tr>
+            <tr>
+              <td><b>Seat Number</b></td>
+              <td>1A</td>
+            </tr>
+            <tr>
+              <td><b>Total Fare</b></td>
+              <td>500</td>
+            </tr>
+            <tr>
+              <td><b>Bus Number</b></td>
+              <td>DL 1004 </td>
+            </tr>
+            <tr>
+              <td><b>Departure Timing</b></td>
+              <td>9PM</td>
+            </tr>
+          </tbody>
+        </Table>
+      </Card>
+        </div>
+`
     };
 
     transporter.sendMail(mailOptions, function(error, info){
