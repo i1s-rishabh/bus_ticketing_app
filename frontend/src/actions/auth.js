@@ -7,6 +7,8 @@ import {
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    ADMIN_CALLED,
+    USER_CALLED,
     LOGOUT,
 } from './types';
 
@@ -21,7 +23,16 @@ export const loadUser = ()=> async dispatch => {
     
     try{
         const res = await axios.get('/api/users/auth')
-
+        if(res.data.isAdmin){
+            dispatch({
+                type:ADMIN_CALLED
+            })
+        }
+        else{
+            dispatch({
+                type:USER_CALLED
+            })
+        }
         dispatch({
             type: USER_LOADED,
             payload: res.data
@@ -100,7 +111,7 @@ export const userLogin = (email,password) => async dispatch => {
             payload:res.data
         })
 
-        console.log('hello')
+        dispatch(loadUser())
     }catch(err){
         const errors = err.response.data.errors;
         if(errors){
@@ -109,7 +120,6 @@ export const userLogin = (email,password) => async dispatch => {
                 
             });
         }
-
         dispatch({
             type:LOGIN_FAIL,
         })
@@ -118,6 +128,39 @@ export const userLogin = (email,password) => async dispatch => {
     }
 }
 
+
+export const adminLogin = (email,password) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = JSON.stringify({email,password})
+    
+    try{
+        const res = await axios.post('/api/users/adminLogin',body,config)
+        dispatch({
+            type:LOGIN_SUCCESS,
+            payload:res.data
+        })
+
+        dispatch(loadUser())
+    }catch(err){
+        const errors = err.response.data.errors;
+        if(errors){
+            errors.forEach(error => {
+                dispatch(setAlert(error.msg,'danger'))
+                
+            });
+        }
+        dispatch({
+            type:LOGIN_FAIL,
+        })
+
+        dispatch(setAlert('Invalid creadentials','danger'))
+    }
+}
 
 // LOGOUT//
 export const logout = () => dispatch => {

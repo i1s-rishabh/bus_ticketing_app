@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require('../models/Users')
 const { check, validationResult } = require('express-validator')
 const { createUser } = require('../controllers/signup');
-const { login } = require('../controllers/login')
+const { login,adminLogin } = require('../controllers/login')
 const { cancelTickets } = require('../controllers/tickets')
 const auth = require('../middlewares/auth')
 
@@ -24,6 +24,11 @@ router.post("/login",[
         check("email", "please include a valid email").isEmail(),
         check("password", "password is required").exists(),
 ],login)
+
+router.post("/Adminlogin",[
+    check("email", "please include a valid email").isEmail(),
+    check("password", "password is required").exists(),
+],adminLogin)
 
  
 // @route api/users/login

@@ -4,8 +4,9 @@ import {REGISTER_FAIL,
     USER_LOADED,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    USER_CALLED,
+    ADMIN_CALLED,
     LOGOUT,
-    ACCOUNT_DELETED
 } from "../actions/types";
 
 
@@ -13,6 +14,7 @@ const initialState = {
     token : localStorage.getItem('token'),
     isAuthenticated : null,
     loading: true,
+    isAdmin:false,
     user : null,
 };
 
@@ -21,6 +23,22 @@ const auth=(state = initialState, action)=>{
     console.log(type)
     console.log(payload)
     switch(type){
+        case ADMIN_CALLED:
+            return{
+                ...state,
+                isAuthenticated:true,
+                loading:false, 
+                isAdmin:true,
+                user:payload
+            }
+        case USER_CALLED:
+                return{
+                    ...state,
+                    isAuthenticated:true,
+                    loading:false, 
+                    isAdmin:false,
+                    user:payload
+                }
         case USER_LOADED:
             return{
                 ...state,
@@ -40,14 +58,15 @@ const auth=(state = initialState, action)=>{
             }
         case REGISTER_FAIL:
         case LOGIN_FAIL:
+        case AUTH_ERROR:
         case LOGOUT:
-        case ACCOUNT_DELETED:
             localStorage.removeItem('token');
             return{
                 ...state,
                 token:null,
                 isAuthenticated:false,
-                loading:false
+                isAdmin:false,
+                loading:true
             }
         default:
             return state;

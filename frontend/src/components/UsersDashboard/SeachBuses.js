@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { searchbuses } from "../../actions/searchBuses";
 import { connect } from "react-redux";
 import propTypes from "prop-types";
-import { Redirect, Link ,useHistory } from "react-router-dom";
+import {useHistory } from "react-router-dom";
 
 const SearchBuses = ({ searchbuses, loading }) => {
   const [formData, setFormData] = useState({
@@ -27,6 +27,10 @@ const SearchBuses = ({ searchbuses, loading }) => {
     } else if (to === from) {
       alert("Please select the valid Departure and Destination");
     } else {
+
+      // setting travel date in to location storage
+      localStorage.setItem('travelDate',date)
+
       let day = new Date(date);
       day = day.getDay();
 
@@ -36,9 +40,7 @@ const SearchBuses = ({ searchbuses, loading }) => {
         date: day,
       };
       searchbuses(newData)
-      console.log("hekko")
       history.push('/getbuses')
-
     }
   };
   return (

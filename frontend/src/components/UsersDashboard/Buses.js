@@ -5,25 +5,30 @@ import BusNotFound from "./BusNotFound";
 import { Spinner } from "../layout/Spinner";
 
 const Buses = ({searchBuses:{ buses,loading }}) => {
+  let travelDate = localStorage.getItem('travelDate');
+  travelDate = new Date(travelDate)
+  const month = travelDate.toLocaleString('default', { month: 'short' })
+  const date = travelDate.getDate()
   return loading ? <Spinner /> : (
     <Fragment>
       {buses.length === 0 ? (
         <BusNotFound />
       ) : (
         <Fragment>
-          <div class="fluid-container">
+          <div class="fluid-container pb-5">
             {buses.map((bus) => (
               <div class="row mb-5">
                 <div class="card w-100">
                   <div class="card-header d-flex flex-direction-column justify-content-between">
                     <div>
                       <h4 class="agencyName">{bus.agency.agencyName}</h4>
-                      <h4 class="busName">{bus.busName}</h4>
-                      <h5>{bus.busType}/ {bus.seatCategory}</h5>
+                      <h6 class="busName">{bus.busName}</h6>
+                      <h6>{bus.busType}/ {bus.seatCategory}</h6>
                     </div>
                     <div>
                       <h6>{bus.arrivalTime}</h6>
                       <h6>{bus.from.city}, {bus.from.state}</h6>
+                      <h6>{date} {month}</h6>
                     </div>
                     <div>
                       <h6>{bus.departureTime}</h6>

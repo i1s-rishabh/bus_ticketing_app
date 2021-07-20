@@ -52,7 +52,6 @@ const UserLogin = ({ userLogin,isAuthenticated }) => {
 
 
 UserLogin.propTypes = {
-    setAlert:PropTypes.func.isRequired,
     userLogin:PropTypes.func.isRequired,
     isAuthenticated:PropTypes.bool.isRequired,
 }
