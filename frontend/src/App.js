@@ -12,13 +12,17 @@ import Alerts from "./components/layout/Alerts";
 import BookTicket from "./components/UsersDashboard/BookTicket";
 import SearchBuses  from './components/UsersDashboard/SeachBuses';
 import Buses from './components/UsersDashboard/Buses'
+import Dashboard from './components/AdminDashboard/Dashboard'
 import PrivateRoute from "./components/routing/PrivateRoutes";
+import AdminRoute from "./components/routing/AdminRoutes";
+
 
 
 import UserLogin from "./components/auth/UserLogin";
 import UserSignUp from "./components/auth/UserSignUp";
 import AdminLogin from "./components/auth/AdminLogin";
 import AdminSignup from "./components/auth/AdminSignup";
+import Profile from "./components/AdminDashboard/Profile"
 
 import "./App.css";
 import { loadUser } from './actions/auth'
@@ -49,8 +53,10 @@ const App = () => {
           <Route exact path='/admin/login' component={AdminLogin} />
           <Route exact path='/admin/register' component={AdminSignup} />
           <PrivateRoute exact path='/searchBuses' component={SearchBuses} />
-          <PrivateRoute exact path='/bookTickets' component={BookTicket} />
           <PrivateRoute exact path='/getbuses' component={Buses} />
+          <PrivateRoute exact path='/bus/:busId/bookTickets' component={BookTicket} />
+          <AdminRoute exact path='/admin/dashboard' component={Dashboard} />
+          <AdminRoute exact path='/create-profile' component={Profile} />
         </Switch>
       </section>
       <Footer />

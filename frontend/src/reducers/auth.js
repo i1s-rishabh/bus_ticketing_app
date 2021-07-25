@@ -20,8 +20,6 @@ const initialState = {
 
 const auth=(state = initialState, action)=>{
     const {type, payload} = action;
-    console.log(type)
-    console.log(payload)
     switch(type){
         case ADMIN_CALLED:
             return{
@@ -66,10 +64,10 @@ const auth=(state = initialState, action)=>{
                 token:null,
                 isAuthenticated:false,
                 isAdmin:false,
-                loading:true
+                loading:true    
             }
         default:
             return state;
-    }
+    } 
 }
 export default auth;

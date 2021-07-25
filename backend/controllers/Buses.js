@@ -211,16 +211,20 @@ const getBusStatus = async (req, res) => {
 
     let allBookedSeats = await allBookedTickets(req.params.busId);
     let statusObj = {};
+    const unbookedSeats = []
+    let windowSeats = 0
 
     for (let i = 0; i < seats.length; i++) {
       for (let j = 0; j < seats[i].length; j++) {
-        if (allBookedSeats.includes(seats[i][j])) {
-          statusObj[`${seats[i][j]}`] = "Booked";
-        } else {
-          statusObj[`${seats[i][j]}`] = "Empty";
+        if (!allBookedSeats.includes(seats[i][j])) {
+          unbookedSeats.push(seats[i][j])
+          if(seats[i][j].charAt(seats[i][j].length-1) === "A" || seats[i][j].charAt(seats[i][j].length-1) === "D" ){
+            windowSeats+=1
+          }
         }
       }
     }
+    statusObj= {unbookedSeats,windowSeats}
     return res.status(200).json(statusObj);
   } catch (err) {
     res.status(500).json("server Error");

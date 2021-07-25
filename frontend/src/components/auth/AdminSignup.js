@@ -103,7 +103,6 @@ const AdminSignup = ({ setAlert, userRegister, isAuthenticated }) => {
                 name="email"
                 value={email} onChange={e => onChange(e)}
                 label="Email Address"
-                name="email"
                 autoComplete="email"
               />
             </Grid>

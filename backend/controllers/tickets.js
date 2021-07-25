@@ -30,7 +30,6 @@ const bookTickets = async (req, res) => {
 
   try {
     const bus = await Bus.findById(req.params.busId);
-
     if (!bus) {
       return res.status(400).json({ msg: "there is no such bus found" });
     }
@@ -45,7 +44,9 @@ const bookTickets = async (req, res) => {
     isBooked = seats_no.filter((bookedSeat) => {
       return allBookedSeats.includes(bookedSeat);
     });
+
     if (isBooked.length > 0) {
+
       return res.status(400).json({ msg: "seats are already booked" });
     }
 
@@ -54,74 +55,74 @@ const bookTickets = async (req, res) => {
     const generateTicket = new Tickets(createTicket);
     await generateTicket.save();
 
-    var mailOptions = {
-      from: 'sonu19@navgurukul.org',
-      to: 'rohit19@navgurukul.org',
-      subject: "Tickets Status",
-      html: `<p>Hello Deepak</p>
-      <p> Your Ticket Detail </p>
-      <div> 
-        <Card className="container p-5">
-        <Table bordered size="sm">
-          <tbody>
-            <tr>
-              <td colSpan="2">
-                <b> From </b>New Delhi, Delhi
-              </td>
-            </tr>
-             <tr>
-              <td colSpan="2">
-               <b> to </b> Dharamshala, Himachal pradesh
-              </td>
-            </tr>
-            <tr>
-              <td><b> Date of journey</b> </td>
-              <td>5/8/2021</td>
-            </tr>
-            <tr>
-              <td><b>Bus Name and Type</b></td>
-              <td>Pucchi Travels semi sleeper AC bus</td>
-            </tr>
-            <tr>
-              <td><b>Passenger Name</b></td>
-              <td>Kartik</td>
-            </tr>
-            <tr>
-              <td><b>Phone Number</b></td>
-              <td>1236547891</td>
-            </tr>
-            <tr>
-              <td><b>Seat Number</b></td>
-              <td>1A</td>
-            </tr>
-            <tr>
-              <td><b>Total Fare</b></td>
-              <td>500</td>
-            </tr>
-            <tr>
-              <td><b>Bus Number</b></td>
-              <td>DL 1004 </td>
-            </tr>
-            <tr>
-              <td><b>Departure Timing</b></td>
-              <td>9PM</td>
-            </tr>
-          </tbody>
-        </Table>
-      </Card>
-        </div>
-`
-    };
+//     var mailOptions = {
+//       from: 'sonu19@navgurukul.org',
+//       to: 'rohit19@navgurukul.org',
+//       subject: "Tickets Status",
+//       html: `<p>Hello Deepak</p>
+//       <p> Your Ticket Detail </p>
+//       <div> 
+//         <Card className="container p-5">
+//         <Table bordered size="sm">
+//           <tbody>
+//             <tr>
+//               <td colSpan="2">
+//                 <b> From </b>New Delhi, Delhi
+//               </td>
+//             </tr>
+//              <tr>
+//               <td colSpan="2">
+//                <b> to </b> Dharamshala, Himachal pradesh
+//               </td>
+//             </tr>
+//             <tr>
+//               <td><b> Date of journey</b> </td>
+//               <td>5/8/2021</td>
+//             </tr>
+//             <tr>
+//               <td><b>Bus Name and Type</b></td>
+//               <td>Pucchi Travels semi sleeper AC bus</td>
+//             </tr>
+//             <tr>
+//               <td><b>Passenger Name</b></td>
+//               <td>Kartik</td>
+//             </tr>
+//             <tr>
+//               <td><b>Phone Number</b></td>
+//               <td>1236547891</td>
+//             </tr>
+//             <tr>
+//               <td><b>Seat Number</b></td>
+//               <td>1A</td>
+//             </tr>
+//             <tr>
+//               <td><b>Total Fare</b></td>
+//               <td>500</td>
+//             </tr>
+//             <tr>
+//               <td><b>Bus Number</b></td>
+//               <td>DL 1004 </td>
+//             </tr>
+//             <tr>
+//               <td><b>Departure Timing</b></td>
+//               <td>9PM</td>
+//             </tr>
+//           </tbody>
+//         </Table>
+//       </Card>
+//         </div>
+// `
+//     };
 
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        res.status(400).json({msg:"error"})
-      } else {
-        console.log('Email sent successfully: ');
-        return res.status(200).json(generateTicket);
-      }
-    });
-    
+    // transporter.sendMail(mailOptions, function(error, info){
+    //   if (error) {
+    //     res.status(400).json({msg:"error"})
+    //   } else {
+    //     console.log('Email sent successfully: ');
+    //     return res.status(200).json(generateTicket);
+    //   }
+    // });
+    return res.status(200).json(generateTicket);
   } catch (err) {
     return res.status(500).json({ msg: "server error" });
   }

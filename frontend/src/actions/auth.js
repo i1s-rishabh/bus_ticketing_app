@@ -25,7 +25,8 @@ export const loadUser = ()=> async dispatch => {
         const res = await axios.get('/api/users/auth')
         if(res.data.isAdmin){
             dispatch({
-                type:ADMIN_CALLED
+                type:ADMIN_CALLED,
+                payload:res.data
             })
         }
         else{

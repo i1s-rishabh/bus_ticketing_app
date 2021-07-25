@@ -21,7 +21,7 @@ const searchBuses = (state = initialState, action) => {
           buses: payload,
           loading: false,
         };
-        case BUS_NOTFOUND:
+      case BUS_NOTFOUND:
           return {
             ...state,
             buses:[],
@@ -29,7 +29,6 @@ const searchBuses = (state = initialState, action) => {
           }
       default:
         return state;
-        break;
     }
   }
   

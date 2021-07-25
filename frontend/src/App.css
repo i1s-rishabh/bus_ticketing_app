@@ -38,9 +38,8 @@ img {
 .container {
   max-width: 1100px;
   margin: auto;
-  overflow: hidden;
   padding: 0 2rem;
-  margin-top: 6rem;
+  padding-top: 7rem;
   margin-bottom: 3rem;
 }
 
@@ -554,7 +553,8 @@ button {
   .dash-buttons a {
     display: block;
     width: 100%;
-    margin-bottom: 0.2rem;
+    position: fixed;
+    bottom: 7rem;
   }
 
   .post {
@@ -1146,7 +1146,7 @@ ol {
 }
 
 .seat input[type=checkbox]:disabled+label {
-  background: rgb(212, 112, 112);
+  background: black;
   text-indent: -9999px;
   overflow: hidden;
 }
@@ -1160,10 +1160,6 @@ ol {
   transform: translate(-50%, 0%);
 }
 
-.seat input[type=checkbox]:disabled+label:hover {
-  box-shadow: none;
-  cursor: not-allowed;
-}
 
 .seat label {
   display: block;
@@ -1287,13 +1283,22 @@ ol {
   clear: both;
 }
 
+.booked {
+  background:black !important;
+  color:black !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+}
+
 .ss {
   /* width: auto; */
-  width: 120%;
-  margin-left: -150px;
-  height: 600px;
   border: 1px solid #00acee;
-  background-color: #00abeeb0;
+  padding-bottom: 55px;
+  /* background-color: #00abeeb0; */
+}
+
+.steering {
+  width: 15%;
 }
 
 .seatInfo {
@@ -1317,98 +1322,6 @@ ol {
 .form-check{
   margin-left: 32px;
   margin-top:5px;
-}
-
-.seatBT{
-  display:block;
-  margin-left:10%;
-}
-
-.hideBT{
-  display:none;
-}
-
-.activeArrow2 {
-  color:red;
-  position: absolute;
-  margin-top:50px;
-  left: 370px;
-  animation: bounce 0.5s infinite linear;
-}
-
-@-webkit-keyframes bounce {
-  0% {
-      top: 0;
-  }
-  50% {
-      top: -0.2em;
-  }
-  70% {
-      top: -0.3em;
-  }
-  100% {
-      top: 0;
-  }
-}
-
-@-moz-keyframes bounce {
-  0% {
-      top: 0;
-  }
-  50% {
-      top: -0.2em;
-  }
-  70% {
-      top: -0.3em;
-  }
-  100% {
-      top: 0;
-  }
-}
-
-@-o-keyframes bounce {
-  0% {
-      top: 0;
-  }
-  50% {
-      top: -0.2em;
-  }
-  70% {
-      top: -0.3em;
-  }
-  100% {
-      top: 0;
-  }
-}
-
-@-ms-keyframes bounce {
-  0% {
-      top: 0;
-  }
-  50% {
-      top: -0.2em;
-  }
-  70% {
-      top: -0.3em;
-  }
-  100% {
-      top: 0;
-  }
-}
-
-@keyframes bounce {
-  0% {
-      top: 0;
-  }
-  50% {
-      top: -0.2em;
-  }
-  70% {
-      top: -0.3em;
-  }
-  100% {
-      top: 0;
-  }
 }
 
 

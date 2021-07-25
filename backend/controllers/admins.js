@@ -14,12 +14,11 @@ const getAgency = async (req, res) => {
     if (!agency) {
       return res.status(400).json({ msg: "There is no profile for this user" });
     }
-    res.status(200).json(agency);
+    return res.status(200).json(agency);
   } catch (err) {
-    res.status(500).json({msg:"Server error"});
+    return res.status(500).json({msg:"Server error"});
   }
 };
-
 
 
 
