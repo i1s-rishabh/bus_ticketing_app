@@ -14,7 +14,7 @@ const Dashboard = ({
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return loading && profile === null ? (
+  return loading===true && profile === null ? (
     <Spinner />
   ) : (
     <Fragment>
@@ -23,7 +23,7 @@ const Dashboard = ({
          Welcome {user && user.name}
       </h1>
 
-      {profile !== null ? (
+      {profile !== null  ? (
         <Fragment>
           <DashboardActions profile={profile}/>
         </Fragment>

@@ -38,8 +38,9 @@ export default (state = initialState, action) => {
         profile: null,
         buses: [],
         staffs: [],
-        loading: false,
+        loading: true,
       };
+      
     default:
       return state;
   }

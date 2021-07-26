@@ -25,13 +25,17 @@ router.post("/login",[
         check("password", "password is required").exists(),
 ],login)
 
+
+// api/users/Admnlogin
+// @ desc a admin can only login
+
 router.post("/Adminlogin",[
     check("email", "please include a valid email").isEmail(),
     check("password", "password is required").exists(),
 ],adminLogin)
 
  
-// @route api/users/login
+// @route api/users/auth
 router.get('/auth', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password')

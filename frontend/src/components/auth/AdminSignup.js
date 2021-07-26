@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AdminSignup = ({ setAlert, userRegister, isAuthenticated }) => {
+const AdminSignup = ({ setAlert, userRegister, isAdmin }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -64,7 +64,7 @@ const AdminSignup = ({ setAlert, userRegister, isAuthenticated }) => {
 
 
   const classes = useStyles();
-  if (isAuthenticated) {
+  if (isAdmin) {
     return <Redirect to="/admin/dashboard" />;
   }
 
@@ -157,11 +157,11 @@ const AdminSignup = ({ setAlert, userRegister, isAuthenticated }) => {
 AdminSignup.propTypes = {
   userRegister:PropTypes.func.isRequired,
   setAlert:PropTypes.func.isRequired,
-  isAuthenticated:PropTypes.bool,
+  isAdmin:PropTypes.bool,
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated:state.auth.isAuthenticated
+  isAdmin:state.auth.isAdmin
 })
 
 export default connect(mapStateToProps,{setAlert,userRegister})(AdminSignup);

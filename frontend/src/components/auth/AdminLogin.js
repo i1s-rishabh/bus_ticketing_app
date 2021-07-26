@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { adminLogin } from "../../actions/auth";
+import {useHistory } from "react-router-dom";
+
 
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -10,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 
 import PropTypes from "prop-types";
 
-function AdminLogin({ adminLogin, isAuthenticated }) {
+function AdminLogin({ adminLogin, isAdmin }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -49,10 +51,12 @@ function AdminLogin({ adminLogin, isAuthenticated }) {
     },
   }));
   const classes = useStyles();
-
-  if (isAuthenticated) {
-    return <Redirect to="/admin/dashboard" />;
+  let history = useHistory()
+  
+  if (isAdmin) {
+   history.push('/admin/dashboard')
   }
+
   return (
     <div className="page-login">
       <div className="ui centered grid container">
@@ -107,12 +111,12 @@ function AdminLogin({ adminLogin, isAuthenticated }) {
 }
 
 AdminLogin.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   adminLogin: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+  isAdmin: state.auth.isAdmin,
 });
 
 export default connect(mapStateToProps, { adminLogin })(AdminLogin);

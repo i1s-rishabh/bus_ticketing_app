@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "sonu19@navgurukul.org",
+    user: "kartik19@navgurukul.org",
     pass: '11111111'
   }
 });
@@ -24,7 +24,6 @@ const bookTickets = async (req, res) => {
     seats_no,
     passengers,
     journeyDate,
-    email,
     contactNo,
   };
 
@@ -56,8 +55,8 @@ const bookTickets = async (req, res) => {
     await generateTicket.save();
 
 //     var mailOptions = {
-//       from: 'sonu19@navgurukul.org',
-//       to: 'rohit19@navgurukul.org',
+//       from: 'kartik19@navgurukul.org',
+//       to: `${email}`,
 //       subject: "Tickets Status",
 //       html: `<p>Hello Deepak</p>
 //       <p> Your Ticket Detail </p>
@@ -116,7 +115,8 @@ const bookTickets = async (req, res) => {
 
     // transporter.sendMail(mailOptions, function(error, info){
     //   if (error) {
-    //     res.status(400).json({msg:"error"})
+    //     console.log(error,"error")
+    //     return res.status(400).json({msg:"error"})
     //   } else {
     //     console.log('Email sent successfully: ');
     //     return res.status(200).json(generateTicket);

@@ -20,9 +20,9 @@ const DashboardActions = ({profile:{agencyName,phone,headOfficeLocation,createdA
         </h2>
         <h2 className="StartedAt">Partner Since: {startedAt} </h2>
       <div className="dash-buttons mt-4">
-        <Link to="/delete-profile" className="btn btn-danger">
+        <button className="btn btn-danger">
            Delete
-        </Link>
+        </button>
         <Link to="/my-buses" className="btn btn-primary">
           <i className="fab fa-black-tie text-primary"></i> Buses
         </Link>

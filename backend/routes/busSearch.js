@@ -35,7 +35,6 @@ deleteBus
 );
 
 
-
 //private route
 // get  api/buses/:busId/status
 // @ desc get bus status by busId

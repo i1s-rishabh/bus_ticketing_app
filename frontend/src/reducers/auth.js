@@ -64,6 +64,7 @@ const auth=(state = initialState, action)=>{
                 token:null,
                 isAuthenticated:false,
                 isAdmin:false,
+                user:null,
                 loading:true    
             }
         default:
