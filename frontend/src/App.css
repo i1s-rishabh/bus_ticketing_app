@@ -1350,3 +1350,9 @@ ol {
 .page-login{
   margin-top: 30px;
 }
+
+#addBus{
+  position:sticky;
+  position:-webkit-sticky;
+   z-index: 1; top: 30px;  
+}

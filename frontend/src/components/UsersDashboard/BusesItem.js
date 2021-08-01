@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getBusStatus } from '../../actions/busStatus'
 
-const BusesItem = ({ bus, busStatus:{loading,status} }) => {
+const BusesItem = ({ bus, busStatus:{loading,status},key }) => {
   useEffect(() => {
     getBusStatus(bus._id);
   }, [getBusStatus, bus._id]);
@@ -15,7 +15,7 @@ const BusesItem = ({ bus, busStatus:{loading,status} }) => {
   const date = travelDate.getDate();
 
   return (
-    <div className="row mb-5">
+    <div className="row mb-5" key={key}>
       <div className="card w-100">
         <div className="card-header d-flex flex-direction-column justify-content-between">
           <div>

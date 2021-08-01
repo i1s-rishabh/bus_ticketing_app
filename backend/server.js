@@ -16,6 +16,8 @@ app.use('/api/users',userRoutes);
 const adminRoutes = require('./routes/admins')
 app.use('/api/admins/admin',adminRoutes)
 
+app.use("/",require('./routes/getLocation'))
+
 app.use((req,res,next)=>{
     console.log("next called without anything")
     next()

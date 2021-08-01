@@ -19,12 +19,14 @@ const bookTickets = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { seats_no, passengers, journeyDate, email, contactNo } = req.body;
+  const { seats_no, passengers, journeyDate, email,from,to, contactNo } = req.body;
   const createTicket = {
     seats_no,
     passengers,
     journeyDate,
     contactNo,
+    from,
+    to
   };
 
   try {
@@ -159,4 +161,16 @@ const cancelTickets = async (req, res) => {
   }
 }
 
-module.exports = { bookTickets, cancelTickets };
+
+const getTickets = async(req, res, next) => {
+  const tickets = await Tickets.find({ userId: req.user.id }).populate('busId',['vehicleNo','departureTime']);
+  if (!tickets.length) {
+      return next({ status: 400, errors: "You have not booked any ticket" });
+  }
+
+  console.log(tickets);
+  res.status(200).json(tickets);
+};
+
+
+module.exports = { bookTickets, cancelTickets, getTickets };

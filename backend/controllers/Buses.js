@@ -89,13 +89,14 @@ const addBus = async (req, res) => {
 
       bus = new Bus(busDetails);
 
-      console.log("done successfully");
+      console.log("done successfully",bus);
       await bus.save();
-      res.status(200).json(bus);
+      return res.status(200).json(bus);
     } else {
       return res.status(400).json({ msg: "No agency found of current admin" });
     }
   } catch (err) {
+    console.log(err)
     return res.status(500).json({ msg: "Server error" });
   }
 };
@@ -148,7 +149,7 @@ const searchBuses = async (req, res) => {
     .populate('agency',['agencyName','phone']);
     
 
-    if (!buses) {
+    if (!buses) { 
       return res.status(400).json([]);
     }
     buses = buses.filter((bus) => {
@@ -166,12 +167,13 @@ const searchBuses = async (req, res) => {
   }
 };
 
-//get bus by busId
+//get bus by adminId
 const getBus = async (req, res) => {
   try {
-    const bus = await Bus.findById(req.params.busId);
+    const bus = await Bus.find({agency:req.params.adminId}).populate('to',['city','state'])
+    .populate('from',['city','state']);
 
-    if (!bus) {
+    if (bus.length===0) {
       return res.status(400).json({ msg: "there is no such bus" });
     }
     return res.status(200).json(bus);
@@ -190,9 +192,13 @@ const deleteBus = async(req,res) => {
       return res.status(400).json({msg:"bus not found"})
     }
 
-    if(bus.agency.toString() !== agency._id.toString()){
-      await findOneAndDelete({_id:req.params.id})
+    if(bus.agency.toString() === agency._id.toString()){
+      console.log("hello")
+      await Bus.findOneAndDelete({_id:req.params.busId})
       return res.status(200).json({msg:"Bus deleted successfully"})
+    }
+    else{
+      return res.status(400).json({msg:"bus not found"})
     }
   }catch(err){
     return res.status(500).json({msg:"server error"})

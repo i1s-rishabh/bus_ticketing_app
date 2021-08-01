@@ -36,7 +36,15 @@ const ticketSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'buses',
         require: true,
-    }
+    },
+	from:{
+		type:String,
+		required:true
+	},
+	to:{
+		type:String,
+		required:true
+	}
 },
 { 
     timestamps: true

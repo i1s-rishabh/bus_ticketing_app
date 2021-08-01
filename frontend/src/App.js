@@ -23,10 +23,18 @@ import UserSignUp from "./components/auth/UserSignUp";
 import AdminLogin from "./components/auth/AdminLogin";
 import AdminSignup from "./components/auth/AdminSignup";
 import Profile from "./components/AdminDashboard/Profile"
+import AdminBuses from "./components/AdminDashboard/Buses";
+import AddBus from "./components/AdminDashboard/AddBus";
+import AddLocation from "./components/AdminDashboard/AddLocation";
+import AddStaff from "./components/AdminDashboard/AddStaff";
+import Staffs from "./components/AdminDashboard/Staffs";
+
+
 
 import "./App.css";
 import { loadUser } from './actions/auth'
 import setAuthToken from './utils/setAuthToken'
+import Tickets from "./components/UsersDashboard/Tickets";
 
 if(localStorage.token){
   setAuthToken(localStorage.token);
@@ -45,7 +53,7 @@ const App = () => {
     <Fragment>
       <Navbar />
       <Route exact path="/" component={Landing} />
-      <section className='container'>
+      <section className='container mb-5 pb-5'>
         <Alerts />
         <Switch>
           <Route exact path='/user/register' component={UserSignUp} />
@@ -53,10 +61,17 @@ const App = () => {
           <Route exact path='/admin/login' component={AdminLogin} />
           <Route exact path='/admin/register' component={AdminSignup} />
           <PrivateRoute exact path='/searchBuses' component={SearchBuses} />
+          <PrivateRoute exact path='/my-bookings' component={Tickets} />
           <PrivateRoute exact path='/getbuses' component={Buses} />
           <PrivateRoute exact path='/bus/:busId/bookTickets' component={BookTicket} />
           <AdminRoute exact path='/admin/dashboard' component={Dashboard} />
           <AdminRoute exact path='/create-profile' component={Profile} />
+          <AdminRoute exact path='/my-buses' component={AdminBuses} />
+          <AdminRoute exact path='/addbus' component={AddBus} />
+          <AdminRoute exact path='/addLocation' component={AddLocation} />
+          <AdminRoute exact path='/addStaff' component={AddStaff} />
+          <AdminRoute exact path='/my-staffs' component={Staffs} />
+
         </Switch>
       </section>
       <Footer />

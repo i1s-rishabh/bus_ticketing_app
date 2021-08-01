@@ -32,4 +32,30 @@ const addStaff = async (req, res) => {
   }
 };
 
-module.exports = { addStaff };
+const getStaffs = async(req,res) =>{
+  try {
+    const staffs = await Staffs.find({adminId:req.params.adminId})
+    if(staffs.length === 0){
+      return res.status(400).json({ msg: "No Staff Found" });
+    }
+    res.status(200).json(staffs)
+} catch (err) {
+    res.status(500).send("server error");
+}
+}
+
+const deleteStaff = async(req,res) =>{
+  try {
+      const staff = await Staffs.findOneAndDelete({ _id: req.params.staffId})
+      if(!staff){
+         return res.status(400).json({msg:"No such staff found"})
+      }
+      return res.status(200).json({msg:"staff deleted succesfully"})
+      }
+      catch (err) {
+        console.error(err)
+      return res.status(500).json({msg:"Server error"});
+    }
+  };
+
+module.exports = { addStaff, getStaffs,deleteStaff };

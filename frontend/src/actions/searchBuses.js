@@ -2,7 +2,7 @@ import axios from "axios";
 import { setAlert } from "./alerts";
 import { BUS_FOUND, BUS_NOTFOUND } from "./types";
 
-// Search Buses //
+// Search Buses by locations//
 
 export const searchbuses =
   ({ to, from, date }) =>
@@ -63,3 +63,29 @@ export const searchbuses =
   };
 
 
+
+
+  // search buses of a particular admin //
+
+  export const currentAdminBuses = (adminId) => async (dispatch) => {
+    try {
+      console.log("data found")
+      const res = await axios.get(`/api/buses/${adminId}`);
+      dispatch({
+        type: BUS_FOUND,
+        payload: res.data,
+      });
+    } catch (err) {
+      console.log(err,"error aaya")
+      const errors = err.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => {
+          dispatch(setAlert(error.msg, "danger"));
+        });
+      }
+  
+      dispatch({
+        type: BUS_NOTFOUND,
+      });
+    }
+  };

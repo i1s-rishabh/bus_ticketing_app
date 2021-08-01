@@ -2,7 +2,11 @@ import axios from 'axios';
 import { setAlert } from './alerts'
 import {
     BOOKING_FAIL,
-    BOOKING_SUCCESS
+    BOOKING_SUCCESS,
+    DELETE_TICKET,
+    NO_TICKETS_FOUND,
+    TICKETS_FOUND,
+    TICKET_ERROR
  } from './types';
 
 
@@ -40,4 +44,39 @@ import {
     }
 }
 
+
+
+export const getTickets = () => async dispatch => {
+    try {
+        const res = await axios.get('/api/users/user/tickets');
+
+        dispatch({
+            type: TICKETS_FOUND,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: NO_TICKETS_FOUND
+        });
+    }
+};
+
+export const deleteTicket = (ticketId) => async dispatch => {
+    console.log(ticketId,"delete bus is calling")
+    try{
+        const res = await axios.delete(`/api/users/user/${ticketId}`)
+        dispatch({
+            type: DELETE_TICKET,
+            payload:ticketId
+        })
+        dispatch(setAlert("Ticket cancelled succesfully","success"))
+    }
+    catch(err){
+        dispatch({
+            type:TICKET_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        })
+    }
+}
 

@@ -3,8 +3,10 @@ import { searchbuses } from "../../actions/searchBuses";
 import { connect } from "react-redux";
 import propTypes from "prop-types";
 import {useHistory } from "react-router-dom";
+import mybook from '../../img/mybook.svg'
+import { getTickets } from "../../actions/bookSeats";
 
-const SearchBuses = ({ searchbuses, loading }) => {
+const SearchBuses = ({ searchbuses, getTickets }) => {
   const [formData, setFormData] = useState({
     from: "",
     to: "",
@@ -12,6 +14,12 @@ const SearchBuses = ({ searchbuses, loading }) => {
   });
 
   let history = useHistory()
+
+  const mybookings = ()=>{
+    getTickets()
+    history.push("/my-bookings")
+  }
+
   const { from, to, date } = formData;
 
   const onChange = (e) =>
@@ -30,6 +38,8 @@ const SearchBuses = ({ searchbuses, loading }) => {
 
       // setting travel date in to location storage
       localStorage.setItem('travelDate',date)
+      localStorage.setItem('from',from)
+      localStorage.setItem('to',to)
 
       let day = new Date(date);
       day = day.getDay();
@@ -45,6 +55,9 @@ const SearchBuses = ({ searchbuses, loading }) => {
   };
   return (
     <Fragment>
+      <div className="row justify-content-center">
+      <button type="button" onClick={mybookings}><img style={{width: "200px"}} src={mybook} /></button>
+      </div>
       <div className="ticket my-5">
         <form className="form-row my-5 m-5" onSubmit={(e) => onSubmit(e)}>
           <div className="col">
@@ -91,6 +104,7 @@ const SearchBuses = ({ searchbuses, loading }) => {
 SearchBuses.propTypes = {
   searchbuses: propTypes.func.isRequired,
   loading: propTypes.bool.isRequired,
+  getTickets:propTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -98,4 +112,4 @@ const mapStateToProps = (state) => ({
   loading: state.searchBuses.loading,
 });
 
-export default connect(mapStateToProps, { searchbuses })(SearchBuses);
+export default connect(mapStateToProps, { searchbuses,getTickets })(SearchBuses);

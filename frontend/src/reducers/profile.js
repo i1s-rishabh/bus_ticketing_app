@@ -4,6 +4,10 @@ import {
   UPDATE_AGENCY,
   GET_PROFILE,
   LOGOUT,
+  ADD_STAFF,
+  STAFF_ERROR,
+  GET_STAFF,
+  DELETE_STAFF,
 } from "../actions/types";
 
 const initialState = {
@@ -25,6 +29,22 @@ export default (state = initialState, action) => {
         profile: payload,
         loading: false,
       };
+    case GET_STAFF:
+        return {
+          ...state,
+          staffs:[...payload]
+        }
+    case ADD_STAFF:
+      return {
+        ...state,
+        staffs:[...state.staffs,payload]
+      }
+    case DELETE_STAFF:
+      return {
+        ...state,
+        staffs:state.staffs.filter(staff=> staff._id !== payload)
+      }
+    case STAFF_ERROR:
     case PROFILE_ERROR:
       return {
         ...state,

@@ -5,7 +5,7 @@ const User = require('../models/Users')
 const { check, validationResult } = require('express-validator')
 const { createUser } = require('../controllers/signup');
 const { login,adminLogin } = require('../controllers/login')
-const { cancelTickets } = require('../controllers/tickets')
+const { cancelTickets, getTickets } = require('../controllers/tickets')
 const auth = require('../middlewares/auth')
 
 // api/users/signup  POST route
@@ -46,8 +46,10 @@ router.get('/auth', auth, async (req, res) => {
     }
 });
 
+// @route /api/users/user/tickets
+router.get('/user/tickets', auth, getTickets);
 
-
+//@route /api/users/user/:ticketId
 router.delete("/user/:ticketId",auth,
 cancelTickets
 );

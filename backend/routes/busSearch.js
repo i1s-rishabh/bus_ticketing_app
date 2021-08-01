@@ -21,9 +21,9 @@ router.post("/",[auth,
 
 
 //private route
-// get  api/buses/:busId
-// @ desc search buses by busId
-router.get("/:busId",auth,
+// get  api/buses/:adminId
+// @ desc search buses by adminId
+router.get("/:adminId",auth,isAdmin,
     getBus
 );
 

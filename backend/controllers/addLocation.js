@@ -20,10 +20,10 @@ const addLocation = async (req, res) => {
             state,
         });
         await location.save();
-        res.status(200).json({msg:"Location Added Succesfully!!"})
+        return res.status(200).json({msg:"Location Added Succesfully!!"})
     } catch (err) {
         console.error(err);
-        res.status(500).send("server error");
+        return res.status(500).send("server error");
     }
 };
 

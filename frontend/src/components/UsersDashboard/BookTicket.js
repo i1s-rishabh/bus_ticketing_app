@@ -18,6 +18,11 @@ const BookTicket = ({ bookSeats, busStatus:{loading,status}, getBusStatus, match
   const [seatNumber, setSeatnumber] = useState([]);
 
   const travelDate = localStorage.getItem("travelDate");
+  let to = localStorage.getItem("to")
+  let from = localStorage.getItem("from")
+  to=to.toUpperCase()
+  from = from.toUpperCase()
+
 
 
   const getSeatNumber = (e) => {
@@ -106,7 +111,9 @@ const BookTicket = ({ bookSeats, busStatus:{loading,status}, getBusStatus, match
       passengers,
       journeyDate: travelDate,
       email,
-      contactNo: phone
+      contactNo: phone,
+      to,
+      from
     }
 
     bookSeats(match.params.busId, userData)

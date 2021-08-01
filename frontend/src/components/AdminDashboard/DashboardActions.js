@@ -1,11 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import {useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 
 const DashboardActions = ({profile:{agencyName,phone,headOfficeLocation,createdAt,agent:{email}}}) => {
-    let startedAt = createdAt.slice(0, 10);
+  let history = useHistory()
+  const busesFunc= ()=>{
+    history.push('/my-buses')
+  }
+  const staffFunc = () =>{
+    history.push('/my-staffs')
+  }
+  let startedAt = createdAt.slice(0, 10);
     return (
     <div>
         <h2 className="agencyName">Agency Name: {agencyName}</h2>
@@ -23,12 +31,12 @@ const DashboardActions = ({profile:{agencyName,phone,headOfficeLocation,createdA
         <button className="btn btn-danger">
            Delete
         </button>
-        <Link to="/my-buses" className="btn btn-primary">
-          <i className="fab fa-black-tie text-primary"></i> Buses
-        </Link>
-        <Link to="/my-staff" className="btn btn-primary">
-          <i className="fas fa-graduation-cap text-primary"></i> Staffs
-        </Link>
+        <button to="/my-buses" onClick={busesFunc} className="btn btn-primary">
+           Buses
+        </button>
+        <button to="/my-staff" onClick={staffFunc} className="btn btn-primary">
+           Staffs
+        </button>
       </div>
     </div>
   );
@@ -38,5 +46,4 @@ DashboardActions.propTypes = {
     profile:PropTypes.object.isRequired,
 }
 
-
-export default DashboardActions
+export default connect()(DashboardActions)

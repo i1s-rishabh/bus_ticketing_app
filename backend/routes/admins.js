@@ -4,7 +4,7 @@ const auth = require('../middlewares/auth')
 const isAdmin = require('../middlewares/isAdmin')
 const { getAgency, createAgency, deleteAgency} = require('../controllers/admins');
 const {addBus, resetBus} =require('../controllers/Buses')
-const { addStaff } = require('../controllers/staffs');
+const { addStaff, getStaffs, deleteStaff } = require('../controllers/staffs');
 const {addLocation} = require('../controllers/addLocation');
 const Staff = require('../models/Staffs')
 const { check, validationResult } = require('express-validator')
@@ -13,6 +13,15 @@ const { check, validationResult } = require('express-validator')
 // Get the current admin agency profile
 // private route
 router.get('/agency', auth,isAdmin,getAgency );
+
+// Get @route api/admins/admin/:adminId/staffs
+// Get the current admin staffs
+// private route
+router.get('/:adminId/staffs', auth,isAdmin,getStaffs );
+
+// delete @route api/admins/admin/:staffId
+// private route
+router.delete('/:staffId', auth,isAdmin,deleteStaff );
 
 // delete @route api/admins/agencies/:agencyId
 // Get the current admin agency profile
@@ -37,7 +46,7 @@ router.post('/addAgency', [auth,isAdmin, [
 
 
 
-// POST /api/admins/admin/addLocation
+// POST /api/admins/admin/location
 router.post("/location",[auth,isAdmin,
     [
         check("city", "City is required").not().isEmpty(),
@@ -70,7 +79,7 @@ router.post('/addBus',[auth,isAdmin, [
     check('policy', 'policy should be inserted')
     .not()
     .isEmpty(),
-    check('images', 'images of the should be inserted')
+    check('images', 'images should be inserted')
     .not()
     .isEmpty(),
     check('from', 'boarding point of the bus is required')
@@ -89,7 +98,7 @@ router.post('/addBus',[auth,isAdmin, [
 
 
 
-// POST @route api/admins/:adminId/addStaff
+// POST @route api/admins/
 router.post('/addStaff',[auth,isAdmin, [
     check('phone', 'Phone number is required')
     .isInt()
