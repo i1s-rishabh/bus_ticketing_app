@@ -5,12 +5,12 @@ import travelFast from '../../img/travelFast.jpg'
 const NoTicketFound = () => {
     return (
         <Fragment>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Book The Tickets</h5>
-            <p class="card-text">Travel The World</p>
+    <div className="card">
+        <div className="card-body">
+            <h5 className="card-title">Book The Tickets</h5>
+            <p className="card-text">Travel The World</p>
         </div>
-        <img class="card-img-bottom" style={{height: "30rem"}} src={travelFast} alt="Card image cap" />
+        <img className="card-img-bottom" style={{height: "30rem"}} src={travelFast} alt="Card image cap" />
     </div>
         </Fragment>
         )

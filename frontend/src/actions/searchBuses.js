@@ -16,8 +16,12 @@ export const searchbuses =
     // to=to.toLowerCase()
     // from=from.toLowerCase()
 
-    const [toCity, toState] = to.trim().split(",");
-    const [fromCity, fromState] = from.trim().split(",");
+    let [toCity, toState] = to.split(",");
+    let [fromCity, fromState] = from.split(",");
+    toCity=toCity.trim()
+    toState=toState.trim()
+    fromCity=fromCity.trim()
+    fromState=fromState.trim()
     const data = {
         destination: {
         city: toCity,

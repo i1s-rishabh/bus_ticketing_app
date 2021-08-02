@@ -54,19 +54,19 @@ export const addStaff = ({name,address,phone,isDriver}) => async dispatch => {
 }
 
 
-export const deleteStaff = (staffId) => async dispatch => {
-    try{
-        const res = await axios.delete(`/api/admins/admin/${staffId}`)
-        dispatch({
-            type: DELETE_STAFF,
-            payload:staffId
-        })
-        dispatch(setAlert("Staff removed succesfully","success"))
-    }
-    catch(err){
-        dispatch({
-            type:STAFF_ERROR,
-            payload: {msg: err.response.statusText, status: err.response.status}
-        })
-    }
-}
+// export const deleteStaff = (staffId) => async dispatch => {
+//     try{
+//         const res = await axios.delete(`/api/admins/admin/${staffId}`)
+//         dispatch({
+//             type: DELETE_STAFF,
+//             payload:staffId
+//         })
+//         dispatch(setAlert("Staff removed succesfully","success"))
+//     }
+//     catch(err){
+//         dispatch({
+//             type:STAFF_ERROR,
+//             payload: {msg: err.response.statusText, status: err.response.status}
+//         })
+//     }
+// }

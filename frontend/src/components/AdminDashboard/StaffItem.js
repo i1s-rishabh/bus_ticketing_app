@@ -1,13 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteStaff } from '../../actions/staff'
 import PropTypes from 'prop-types'
 
 
-const StaffItem = ({staff:{_id,phone,name,address,isDriver},deleteStaff}) => {
-    const removeStaff = ()=>{
-        deleteStaff(_id)
-    }
+const StaffItem = ({staff:{phone,name,address,isDriver}}) => {
     return (
         <div className="row mb-4">
             <div className="card w-100">
@@ -25,9 +21,6 @@ const StaffItem = ({staff:{_id,phone,name,address,isDriver},deleteStaff}) => {
                 <h6 className="position"><strong>{isDriver ? "Driver": "Helper"}</strong></h6>
             </div>
             </div>
-            <div className="card-body bg-primary">
-                <button type="button" className="btn btn-danger" onClick={removeStaff}><strong>Remove Staff</strong></button>
-            </div>
             </div>
         </div>
         )
@@ -38,4 +31,4 @@ StaffItem.propTypes = {
 }
 
 
-export default connect(null,{deleteStaff})(StaffItem)
+export default connect()(StaffItem)

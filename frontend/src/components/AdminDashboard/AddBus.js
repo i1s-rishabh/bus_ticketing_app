@@ -71,6 +71,7 @@ const AddBus = ({locations,addBus}) => {
         alert("Your cannot enter same starting and destination city");
             }
         else{
+            console.log(from,to)
             addBus({
                 busName,
                 vehicleNo,
@@ -95,7 +96,7 @@ const AddBus = ({locations,addBus}) => {
     }
 
 
-    var availableLocations = locations.map(location=>`${location.city}, ${location.state}`);
+    // var availableLocations = locations.map(location=>`${location.city}, ${location.state}`);
     
     return (
         <form className="pb-5" onSubmit={e=>onSubmit(e)}>

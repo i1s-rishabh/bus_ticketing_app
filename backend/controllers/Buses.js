@@ -54,7 +54,8 @@ const addBus = async (req, res) => {
 
       busDetails.agency = agencyProfile._id;
       busDetails.seats = generateBus(seats);
-
+      console.log(from)
+      console.log(to)
       let fromLocation = await locationSearch(from);
       let toLocation = await locationSearch(to);
       if (!toLocation || !fromLocation) {

@@ -20,7 +20,7 @@ const SearchBuses = ({ searchbuses, getTickets }) => {
     history.push("/my-bookings")
   }
 
-  const { from, to, date } = formData;
+  let { from, to, date } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,6 +40,8 @@ const SearchBuses = ({ searchbuses, getTickets }) => {
       localStorage.setItem('travelDate',date)
       localStorage.setItem('from',from)
       localStorage.setItem('to',to)
+      to=to.toLowerCase()
+      from=from.toLowerCase()
 
       let day = new Date(date);
       day = day.getDay();

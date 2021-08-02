@@ -20,8 +20,13 @@ export const addBus = ({
     schedule
 }) => async dispatch => {
 
-    const [toCity, toState] = to.trim().split(",");
-    const [fromCity, fromState] = from.trim().split(",");
+    let [toCity, toState] = to.trim().split(",");
+    let [fromCity, fromState] = from.trim().split(",");
+    toCity=toCity.trim()
+    toState=toState.trim()
+    fromCity=fromCity.trim()
+    fromState=fromState.trim()
+
 
     try{
         const config = {
