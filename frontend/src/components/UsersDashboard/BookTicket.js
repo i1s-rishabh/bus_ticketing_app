@@ -5,7 +5,7 @@ import { getBusStatus } from '../../actions/busStatus'
 import { bookSeats } from "../../actions/bookSeats"
 import { connect } from "react-redux";
 
-const BookTicket = ({ bookSeats, busStatus:{loading,status}, getBusStatus, match }) => {
+const BookTicket = ({ buses,bookSeats, busStatus:{loading,status}, getBusStatus, match }) => {
   useEffect(() => {
     getBusStatus(match.params.busId);
   }, [getBusStatus, match.params.busId]);
@@ -154,9 +154,9 @@ const BookTicket = ({ bookSeats, busStatus:{loading,status}, getBusStatus, match
       </form >
       <button
         onClick={(e) => handleSubmitDetails(e)}
-        className="btn btn-info seatBT"
+        className="btn btn-info primary"
       >
-        Confirm Details
+        Book Ticket
   </button>
     </div >)
   }
@@ -391,10 +391,12 @@ BookTicket.propTypes = {
   bookSeats: PropTypes.func.isRequired,
   getBusStatus: PropTypes.func.isRequired,
   busStatus: PropTypes.object.isRequired,
+  buses:PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
   busStatus: state.busStatus,
+  buses:state.searchBuses.buses,
 })
 
 export default connect(mapStateToProps, { bookSeats, getBusStatus })(BookTicket);

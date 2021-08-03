@@ -1,4 +1,4 @@
-import { STATUS_ERROR, GET_BUSSTATUS } from "../actions/types";
+import { STATUS_ERROR, GET_BUSSTATUS} from "../actions/types";
   
   const initialState = {
     status : {},
